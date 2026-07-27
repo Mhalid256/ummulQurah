@@ -4,100 +4,34 @@
 
 @section('content')
 <div class="container-xxl flex-grow-1 container-p-y">
-
-    <!-- Top Executive Hero Banner with Live Clock -->
-    <div class="row mb-4">
-        <div class="col-12">
-            <div class="card border-0 shadow-lg text-white style-hero-banner" 
-                 style="background: linear-gradient(135deg, #051650 0%, #3357b8 100%); border-radius: 1rem; border: 1px solid rgba(255, 255, 255, 0.08);">
-                <div class="card-body p-4">
-                    <div class="row align-items-center gy-3">
-                        <!-- Left Info Block -->
-                        <div class="col-lg-7">
-                            <div class="d-flex align-items-center gap-2 mb-2">
-                                <h2 class="text-white fw-bold mb-0">Executive Dashboard</h2>
-                                <span class="badge bg-primary-subtle text-primary border border-primary-subtle rounded-pill px-3 py-1 fs-tiny text-uppercase fw-semibold">
-                                    Overview
-                                </span>
-                            </div>
-                            <p class="text-white-50 mb-4 fs-6">
-                                Comprehensive management and analytics system for campaigns, donors, and programs.
-                            </p>
-                            
-                            <!-- Date, Clock & Action Controls -->
-                            <div class="d-flex flex-wrap align-items-center gap-3">
-                                <div class="px-3 py-2 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25 d-flex align-items-center gap-2">
-                                    <i class="bx bx-calendar text-primary fs-5"></i>
-                                    <span class="fw-medium text-white-50 fs-7" id="dashboard-date">{{ now()->format('l, F j, Y') }}</span>
-                                </div>
-                                <div class="px-3 py-2 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25 d-flex align-items-center gap-2">
-                                    <i class="bx bx-time-five text-info fs-5"></i>
-                                    <span class="fw-bold text-white fs-7 font-monospace" id="dashboard-clock">00:00:00 AM</span>
-                                </div>
-                                <button type="button" onclick="window.location.reload();" class="btn btn-primary d-inline-flex align-items-center gap-2 shadow-sm rounded-3">
-                                    <i class="bx bx-refresh fs-5"></i>
-                                    <span>Refresh</span>
-                                </button>
-                            </div>
-                        </div>
-
-                        <!-- Right Quick Stats Summary -->
-                        <div class="col-lg-5">
-                            <div class="row g-3 text-center justify-content-lg-end">
-                                <div class="col-6 col-sm-5">
-                                    <div class="p-3 rounded-3 bg-dark bg-opacity-25 border border-secondary border-opacity-10">
-                                        <h2 class="text-white fw-bold mb-1">{{ number_format($stats['total_donors']) }}</h2>
-                                        <span class="text-white-50 fs-7 fw-medium text-uppercase tracking-wider">Total Donors</span>
-                                    </div>
-                                </div>
-                                <div class="col-6 col-sm-5">
-                                    <div class="p-3 rounded-3 bg-dark bg-opacity-25 border border-secondary border-opacity-10">
-                                        <h2 class="text-white fw-bold mb-1">{{ number_format($stats['active_campaigns']) }}</h2>
-                                        <span class="text-white-50 fs-7 fw-medium text-uppercase tracking-wider">Active Campaigns</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <!-- Metric KPI Cards -->
+    <!-- Header Summary Section -->
     <div class="row g-4 mb-4">
         @php
             $tiles = [
-                ['label' => 'Total Donors', 'value' => number_format($stats['total_donors']), 'icon' => 'bx-user-pin', 'color' => 'primary', 'sub' => 'Last 30 days'],
-                ['label' => 'Total Raised', 'value' => number_format($stats['total_raised'], 2), 'icon' => 'bx-donate-heart', 'color' => 'success', 'sub' => 'All time total'],
-                ['label' => 'Active Campaigns', 'value' => number_format($stats['active_campaigns']), 'icon' => 'bx-megaphone', 'color' => 'info', 'sub' => 'Currently live'],
-                ['label' => 'Approved Beneficiaries', 'value' => number_format($stats['beneficiaries']), 'icon' => 'bx-group', 'color' => 'primary', 'sub' => 'Verified records'],
-                ['label' => 'Pending Approval', 'value' => number_format($stats['pending_beneficiaries']), 'icon' => 'bx-time-five', 'color' => 'warning', 'sub' => 'Requires review'],
-                ['label' => 'Active Grants', 'value' => number_format($stats['active_grants']), 'icon' => 'bx-award', 'color' => 'secondary', 'sub' => 'Allocated funds'],
+                ['label' => 'Total Donors', 'value' => number_format($stats['total_donors']), 'icon' => 'bx-user-pin', 'color' => 'primary', 'trend' => '+12.5%', 'trend_color' => 'success'],
+                ['label' => 'Total Raised', 'value' => number_format($stats['total_raised'], 2), 'icon' => 'bx-donate-heart', 'color' => 'success', 'trend' => '+8.2%', 'trend_color' => 'success'],
+                ['label' => 'Active Campaigns', 'value' => number_format($stats['active_campaigns']), 'icon' => 'bx-megaphone', 'color' => 'info', 'trend' => 'Live', 'trend_color' => 'info'],
+                ['label' => 'Approved Beneficiaries', 'value' => number_format($stats['beneficiaries']), 'icon' => 'bx-group', 'color' => 'primary', 'trend' => '+5.4%', 'trend_color' => 'success'],
+                ['label' => 'Pending Approval', 'value' => number_format($stats['pending_beneficiaries']), 'icon' => 'bx-time-five', 'color' => 'warning', 'trend' => 'Action Needed', 'trend_color' => 'warning'],
+                ['label' => 'Active Grants', 'value' => number_format($stats['active_grants']), 'icon' => 'bx-award', 'color' => 'secondary', 'trend' => 'Stable', 'trend_color' => 'secondary'],
             ];
         @endphp
 
         @foreach ($tiles as $tile)
             <div class="col-sm-6 col-md-4 col-xl-2">
-                <div class="card h-100 shadow-sm border rounded-3">
+                <div class="card h-100 shadow-sm border-0">
                     <div class="card-body p-3 d-flex flex-column justify-content-between">
-                        <div class="d-flex align-items-center justify-content-between mb-3">
+                        <div class="d-flex align-items-center justify-content-between mb-2">
                             <span class="avatar-initial rounded-3 bg-label-{{ $tile['color'] }} p-2 d-flex align-items-center justify-content-center">
                                 <i class="bx {{ $tile['icon'] }} fs-4"></i>
                             </span>
-                            <div class="dropdown">
-                                <button class="btn btn-sm btn-icon text-muted" type="button" data-bs-toggle="dropdown">
-                                    <i class="bx bx-dots-vertical-rounded fs-5"></i>
-                                </button>
-                                <ul class="dropdown-menu dropdown-menu-end">
-                                    <li><a class="dropdown-item fs-7" href="#">View Details</a></li>
-                                </ul>
-                            </div>
+                            <span class="badge bg-label-{{ $tile['trend_color'] }} fs-tiny rounded-pill">
+                                {{ $tile['trend'] }}
+                            </span>
                         </div>
                         <div>
-                            <span class="text-muted fw-medium d-block fs-7 text-truncate mb-1">{{ $tile['label'] }}</span>
-                            <h3 class="mb-1 fw-bold text-heading">{{ $tile['value'] }}</h3>
-                            <small class="text-muted fs-tiny d-block">{{ $tile['sub'] }}</small>
+                            <span class="text-muted fw-medium d-block fs-7 text-truncate">{{ $tile['label'] }}</span>
+                            <h4 class="mb-0 fw-bold mt-1 text-heading">{{ $tile['value'] }}</h4>
                         </div>
                     </div>
                 </div>
@@ -105,18 +39,18 @@
         @endforeach
     </div>
 
-    <!-- Main Analytics Charts Section -->
+    <!-- Analytics Charts Row -->
     <div class="row g-4 mb-4">
-        <!-- Area Chart: Revenue / Donations Trend -->
+        <!-- Main Area Chart: Revenue / Donations Trend -->
         <div class="col-lg-8">
-            <div class="card h-100 shadow-sm border rounded-3">
-                <div class="card-header d-flex justify-content-between align-items-center bg-transparent border-bottom border-opacity-10 pb-3">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header d-flex justify-content-between align-items-center bg-transparent border-bottom-0 pb-0">
                     <div>
                         <h5 class="card-title mb-1 fw-bold">Donations Trend</h5>
                         <small class="text-muted">Overview of contributions over the last 6 months</small>
                     </div>
                     <div class="dropdown">
-                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle rounded-pill px-3" type="button" data-bs-toggle="dropdown">
+                        <button class="btn btn-sm btn-outline-secondary dropdown-toggle rounded-pill" type="button" data-bs-toggle="dropdown">
                             Last 6 Months
                         </button>
                         <ul class="dropdown-menu dropdown-menu-end">
@@ -126,7 +60,7 @@
                         </ul>
                     </div>
                 </div>
-                <div class="card-body pt-3">
+                <div class="card-body pt-2">
                     <div id="donationsTrendChart" style="min-height: 315px;"></div>
                 </div>
             </div>
@@ -134,20 +68,20 @@
 
         <!-- Radial Bar Chart: Beneficiary Distribution -->
         <div class="col-lg-4">
-            <div class="card h-100 shadow-sm border rounded-3">
-                <div class="card-header bg-transparent border-bottom border-opacity-10 pb-3">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header bg-transparent border-bottom-0 pb-0">
                     <h5 class="card-title mb-1 fw-bold">Beneficiaries Status</h5>
                     <small class="text-muted">Approval distribution breakdown</small>
                 </div>
                 <div class="card-body d-flex flex-column align-items-center justify-content-center">
                     <div id="beneficiariesRadialChart" class="w-100"></div>
-                    <div class="d-flex justify-content-center gap-4 mt-2 w-100 pt-3 border-top border-opacity-10">
+                    <div class="d-flex justify-content-center gap-4 mt-3 w-100 pt-2 border-top">
                         <div class="d-flex align-items-center gap-2">
-                            <span class="badge rounded-circle bg-success p-1"></span>
+                            <span class="badge rounded-pill bg-success p-1"></span>
                             <span class="fw-semibold fs-7">Approved</span>
                         </div>
                         <div class="d-flex align-items-center gap-2">
-                            <span class="badge rounded-circle bg-warning p-1"></span>
+                            <span class="badge rounded-pill bg-warning p-1"></span>
                             <span class="fw-semibold fs-7">Pending</span>
                         </div>
                     </div>
@@ -156,21 +90,21 @@
         </div>
     </div>
 
-    <!-- Campaigns & Recent Activity -->
+    <!-- Campaigns & Recent Activity Table -->
     <div class="row g-4">
         <!-- Top Performing Campaigns -->
         <div class="col-lg-4">
-            <div class="card h-100 shadow-sm border rounded-3">
-                <div class="card-header d-flex justify-content-between align-items-center bg-transparent border-bottom border-opacity-10 pb-3">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header d-flex justify-content-between align-items-center bg-transparent border-bottom-0">
                     <h5 class="card-title mb-0 fw-bold">Top Campaigns</h5>
                     <a href="javascript:void(0);" class="fs-7 fw-semibold text-primary">View All</a>
                 </div>
-                <div class="card-body pt-3">
+                <div class="card-body">
                     @forelse ($topCampaigns as $campaign)
                         <div class="mb-4">
                             <div class="d-flex justify-content-between align-items-center mb-1">
-                                <span class="fw-semibold text-heading text-truncate" style="max-width: 180px;">{{ $campaign->title }}</span>
-                                <span class="badge bg-label-primary fs-tiny">{{ number_format($campaign->progress_percent) }}%</span>
+                                <span class="fw-semibold text-heading text-truncate style="max-width: 180px;">{{ $campaign->title }}</span>
+                                <span class="badge bg-label-primary fs-tiny ms-2">{{ number_format($campaign->progress_percent) }}%</span>
                             </div>
                             <div class="d-flex justify-content-between fs-tiny text-muted mb-2">
                                 <span>Raised: {{ number_format($campaign->raised_amount, 0) }}</span>
@@ -189,22 +123,22 @@
                     @empty
                         <div class="text-center py-4 text-muted">
                             <i class="bx bx-folder-open fs-1 mb-2 d-block"></i>
-                            <p class="mb-0 fs-7">No active campaigns recorded.</p>
+                            <p class="mb-0">No active campaigns recorded.</p>
                         </div>
                     @endforelse
                 </div>
             </div>
         </div>
 
-        <!-- Recent Transactions Table -->
+        <!-- Recent Donations / Orders Table -->
         <div class="col-lg-8">
-            <div class="card h-100 shadow-sm border rounded-3">
-                <div class="card-header d-flex justify-content-between align-items-center bg-transparent border-bottom border-opacity-10 pb-3">
+            <div class="card h-100 shadow-sm border-0">
+                <div class="card-header d-flex justify-content-between align-items-center bg-transparent border-bottom-0">
                     <div>
                         <h5 class="card-title mb-0 fw-bold">Recent Transactions</h5>
                         <small class="text-muted">Latest contribution records</small>
                     </div>
-                    <button class="btn btn-sm btn-outline-secondary rounded-pill px-3">
+                    <button class="btn btn-sm btn-label-secondary rounded-pill">
                         <i class="bx bx-export me-1"></i> Export
                     </button>
                 </div>
@@ -220,10 +154,12 @@
                                 <th>Status</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody class="table-border-bottom-0">
                         @forelse ($recentDonations as $donation)
                             <tr>
-                                <td><span class="fw-semibold text-primary">#{{ $donation->receipt_no }}</span></td>
+                                <td>
+                                    <span class="fw-semibold text-primary">#{{ $donation->receipt_no }}</span>
+                                </td>
                                 <td>
                                     <div class="d-flex align-items-center">
                                         <div class="avatar avatar-xs me-2">
@@ -270,28 +206,7 @@
 @push('scripts')
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // --- Live Digital Clock Script ---
-    function updateLiveClock() {
-        const clockElement = document.getElementById('dashboard-clock');
-        if (!clockElement) return;
-
-        const now = new Date();
-        let hours = now.getHours();
-        const minutes = String(now.getMinutes()).padStart(2, '0');
-        const seconds = String(now.getSeconds()).padStart(2, '0');
-        const ampm = hours >= 12 ? 'PM' : 'AM';
-
-        hours = hours % 12;
-        hours = hours ? hours : 12;
-        const formattedHours = String(hours).padStart(2, '0');
-
-        clockElement.textContent = `${formattedHours}:${minutes}:${seconds} ${ampm}`;
-    }
-
-    updateLiveClock();
-    setInterval(updateLiveClock, 1000);
-
-    // --- Dynamic Theme Colors for ApexCharts ---
+    // Helper to get Computed Theme Colors dynamically (works across light & dark theme switchers)
     const getThemeColor = (cssVar, fallback) => {
         return getComputedStyle(document.documentElement).getPropertyValue(cssVar).trim() || fallback;
     };
@@ -300,7 +215,7 @@ document.addEventListener('DOMContentLoaded', function () {
     const successColor = getThemeColor('--bs-success', '#39DA8A');
     const warningColor = getThemeColor('--bs-warning', '#FDAC41');
     const textColor = getThemeColor('--bs-body-color', '#a1acb8');
-    const borderColor = getThemeColor('--bs-border-color', 'rgba(255, 255, 255, 0.1)');
+    const borderColor = getThemeColor('--bs-border-color', '#444b54');
 
     // --- Area Chart: Donations Trend ---
     const labels = @json($monthlyDonations->pluck('ym'));
@@ -309,8 +224,9 @@ document.addEventListener('DOMContentLoaded', function () {
     const trendChartOptions = {
         chart: {
             type: 'area',
-            height: 315,
+            height: 310,
             toolbar: { show: false },
+            sparkline: { enabled: false },
             background: 'transparent'
         },
         series: [{ name: 'Donations', data: values }],
@@ -318,7 +234,9 @@ document.addEventListener('DOMContentLoaded', function () {
             categories: labels,
             axisBorder: { show: false },
             axisTicks: { show: false },
-            labels: { style: { colors: textColor, fontSize: '12px' } }
+            labels: {
+                style: { colors: textColor, fontSize: '12px' }
+            }
         },
         yaxis: {
             labels: {
@@ -333,7 +251,7 @@ document.addEventListener('DOMContentLoaded', function () {
             type: 'gradient',
             gradient: {
                 shadeIntensity: 1,
-                opacityFrom: 0.4,
+                opacityFrom: 0.45,
                 opacityTo: 0.05,
                 stops: [0, 95, 100]
             }
@@ -372,10 +290,10 @@ document.addEventListener('DOMContentLoaded', function () {
                 offsetY: 0,
                 startAngle: 0,
                 endAngle: 360,
-                hollow: { size: '52%' },
+                hollow: { size: '50%' },
                 track: {
                     background: borderColor,
-                    opacity: 0.2
+                    opacity: 0.3
                 },
                 dataLabels: {
                     name: {

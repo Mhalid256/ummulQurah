@@ -9,7 +9,7 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="card border-0 shadow-lg text-white style-hero-banner" 
-                 style="background: linear-gradient(135deg, #051650 0%, #3357b8 100%); border-radius: 1rem; border: 1px solid rgba(255, 255, 255, 0.08);">
+                 style="background: linear-gradient(135deg, #12192c 0%, #1a233a 100%); border-radius: 1rem; border: 1px solid rgba(255, 255, 255, 0.08);">
                 <div class="card-body p-4">
                     <div class="row align-items-center gy-3">
                         <!-- Left Info Block -->
@@ -191,7 +191,7 @@
                             <i class="bx bx-folder-open fs-1 mb-2 d-block"></i>
                             <p class="mb-0 fs-7">No active campaigns recorded.</p>
                         </div>
-                    @endforelse
+                    @forelse
                 </div>
             </div>
         </div>
@@ -282,7 +282,7 @@ document.addEventListener('DOMContentLoaded', function () {
         const ampm = hours >= 12 ? 'PM' : 'AM';
 
         hours = hours % 12;
-        hours = hours ? hours : 12;
+        hours = hours ? hours : 12; // 0 becomes 12
         const formattedHours = String(hours).padStart(2, '0');
 
         clockElement.textContent = `${formattedHours}:${minutes}:${seconds} ${ampm}`;

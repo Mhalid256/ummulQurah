@@ -9,7 +9,7 @@
     <div class="row mb-4">
         <div class="col-12">
             <div class="card border-0 shadow-lg text-white style-hero-banner" 
-                 style="background: linear-gradient(135deg, #051650 0%, #3357b8 100%); border-radius: 1rem; border: 1px solid rgba(255, 255, 255, 0.08);">
+                 style="background: linear-gradient(135deg, #011450 0%, #365bbe 100%); border-radius: 1rem; border: 1px solid rgba(255, 255, 255, 0.08);">
                 <div class="card-body p-4">
                     <div class="row align-items-center gy-3">
                         <!-- Left Info Block -->
