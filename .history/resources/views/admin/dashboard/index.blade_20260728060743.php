@@ -4,234 +4,79 @@
 
 @section('content')
 <style>
-    /* -------------------------------------------------------------
-       BASE STAT CARD LAYOUT & ENHANCEMENTS
-    ------------------------------------------------------------- */
+    /* Styling variables aligned with your layout theme */
     .stat-card {
-        border-radius: 14px;
-        padding: 1rem 1.15rem;
+        background: var(--bs-card-bg, #1e293b);
+        border-radius: 12px;
+        padding: 1.25rem;
         position: relative;
         overflow: hidden;
-        min-height: 140px;
+        border: 1px solid var(--bs-border-color, #334155);
         height: 100%;
-        transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        border: 1px solid transparent;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
+        transition: all 0.3s ease;
     }
 
-    /* Hover Lift & Dynamic Glow */
     .stat-card:hover {
-        transform: translateY(-5px);
+        border-color: #4895ef;
+        transform: translateY(-3px);
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
     }
 
-    /* Icon Container Enhancements */
-    .stat-icon-wrapper {
-        width: 38px;
-        height: 38px;
-        border-radius: 10px;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        flex-shrink: 0;
-        transition: transform 0.3s ease;
-    }
-    
-    .stat-card:hover .stat-icon-wrapper {
-        transform: scale(1.08);
+    .stat-card::before {
+        content: '';
+        position: absolute;
+        top: 0; left: 0; right: 0;
+        height: 3px;
+        background: linear-gradient(90deg, #051650, #4895ef);
     }
 
-    /* Metric Number Sizing & Clipping Fix */
-    .stat-value {
-        font-size: 1.35rem;
-        font-weight: 700;
-        line-height: 1.2;
-        letter-spacing: -0.02em;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    /* Label Sizing & Truncation */
-    .stat-label {
-        font-size: 0.8rem;
-        font-weight: 600;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    /* -------------------------------------------------------------
-       LIGHT MODE PASTEL VARIANTS
-    ------------------------------------------------------------- */
-    .card-variant-blue {
-        background-color: #eff6ff !important;
-        border-color: #bfdbfe !important;
-        border-top: 3px solid #3b82f6 !important;
-    }
-    .card-variant-blue:hover { box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.25); }
-
-    .card-variant-green {
-        background-color: #f0fdf4 !important;
-        border-color: #bbf7d0 !important;
-        border-top: 3px solid #22c55e !important;
-    }
-    .card-variant-green:hover { box-shadow: 0 10px 25px -5px rgba(34, 197, 94, 0.25); }
-
-    .card-variant-cyan {
-        background-color: #ecfeff !important;
-        border-color: #a5f3fc !important;
-        border-top: 3px solid #06b6d4 !important;
-    }
-    .card-variant-cyan:hover { box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.25); }
-
-    .card-variant-purple {
-        background-color: #f5f3ff !important;
-        border-color: #ddd6fe !important;
-        border-top: 3px solid #8b5cf6 !important;
-    }
-    .card-variant-purple:hover { box-shadow: 0 10px 25px -5px rgba(139, 92, 246, 0.25); }
-
-    .card-variant-amber {
-        background-color: #fffbeb !important;
-        border-color: #fde68a !important;
-        border-top: 3px solid #f59e0b !important;
-    }
-    .card-variant-amber:hover { box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.25); }
-
-    .card-variant-pink {
-        background-color: #fdf2f8 !important;
-        border-color: #fbcfe8 !important;
-        border-top: 3px solid #ec4899 !important;
-    }
-    .card-variant-pink:hover { box-shadow: 0 10px 25px -5px rgba(236, 72, 153, 0.25); }
-
-
-    /* -------------------------------------------------------------
-       DARK MODE AUTO-ADAPTATION
-    ------------------------------------------------------------- */
-    html[data-bs-theme="dark"] .stat-card,
-    html[data-theme="dark"] .stat-card,
-    [data-bs-theme="dark"] .stat-card,
-    body.dark-mode .stat-card,
-    .dark-style .stat-card {
-        background-color: rgba(30, 41, 59, 0.75) !important;
-        backdrop-filter: blur(8px);
-        border-color: rgba(255, 255, 255, 0.08) !important;
-    }
-
-    /* Dark Mode Accent Top Borders & Glowing Hover Shadows */
-    html[data-bs-theme="dark"] .card-variant-blue,
-    [data-bs-theme="dark"] .card-variant-blue,
-    body.dark-mode .card-variant-blue,
-    .dark-style .card-variant-blue { border-top: 3px solid #3b82f6 !important; }
-    html[data-bs-theme="dark"] .card-variant-blue:hover,
-    [data-bs-theme="dark"] .card-variant-blue:hover { box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4); }
-
-    html[data-bs-theme="dark"] .card-variant-green,
-    [data-bs-theme="dark"] .card-variant-green,
-    body.dark-mode .card-variant-green,
-    .dark-style .card-variant-green { border-top: 3px solid #22c55e !important; }
-    html[data-bs-theme="dark"] .card-variant-green:hover,
-    [data-bs-theme="dark"] .card-variant-green:hover { box-shadow: 0 10px 25px -5px rgba(34, 197, 94, 0.4); }
-
-    html[data-bs-theme="dark"] .card-variant-cyan,
-    [data-bs-theme="dark"] .card-variant-cyan,
-    body.dark-mode .card-variant-cyan,
-    .dark-style .card-variant-cyan { border-top: 3px solid #06b6d4 !important; }
-    html[data-bs-theme="dark"] .card-variant-cyan:hover,
-    [data-bs-theme="dark"] .card-variant-cyan:hover { box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.4); }
-
-    html[data-bs-theme="dark"] .card-variant-purple,
-    [data-bs-theme="dark"] .card-variant-purple,
-    body.dark-mode .card-variant-purple,
-    .dark-style .card-variant-purple { border-top: 3px solid #a855f7 !important; }
-    html[data-bs-theme="dark"] .card-variant-purple:hover,
-    [data-bs-theme="dark"] .card-variant-purple:hover { box-shadow: 0 10px 25px -5px rgba(168, 85, 247, 0.4); }
-
-    html[data-bs-theme="dark"] .card-variant-amber,
-    [data-bs-theme="dark"] .card-variant-amber,
-    body.dark-mode .card-variant-amber,
-    .dark-style .card-variant-amber { border-top: 3px solid #f59e0b !important; }
-    html[data-bs-theme="dark"] .card-variant-amber:hover,
-    [data-bs-theme="dark"] .card-variant-amber:hover { box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.4); }
-
-    html[data-bs-theme="dark"] .card-variant-pink,
-    [data-bs-theme="dark"] .card-variant-pink,
-    body.dark-mode .card-variant-pink,
-    .dark-style .card-variant-pink { border-top: 3px solid #ec4899 !important; }
-    html[data-bs-theme="dark"] .card-variant-pink:hover,
-    [data-bs-theme="dark"] .card-variant-pink:hover { box-shadow: 0 10px 25px -5px rgba(236, 72, 153, 0.4); }
-
-    /* -------------------------------------------------------------
-       QUICK ACTION CARDS
-    ------------------------------------------------------------- */
+    /* Quick Action Cards */
     .quick-action-card {
+        background: var(--bs-card-bg, #1e293b);
+        border: 1px solid var(--bs-border-color, #334155);
         border-radius: 12px;
         padding: 1rem;
         display: flex;
         align-items: center;
-        gap: 0.85rem;
+        gap: 1rem;
         text-decoration: none !important;
         color: inherit;
         transition: all 0.25s ease;
     }
 
     .quick-action-card:hover {
-        transform: translateY(-3px);
+        border-color: #4895ef;
+        transform: translateY(-2px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.12);
     }
 
     .quick-action-icon {
-        width: 42px;
-        height: 42px;
+        width: 48px;
+        height: 48px;
         border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.3rem;
+        font-size: 1.5rem;
         flex-shrink: 0;
-        background: #ffffff;
-        box-shadow: 0 2px 6px rgba(0,0,0,0.06);
     }
 
-    html[data-bs-theme="dark"] .quick-action-icon,
-    [data-bs-theme="dark"] .quick-action-icon,
-    body.dark-mode .quick-action-icon,
-    .dark-style .quick-action-icon {
-        background: rgba(255, 255, 255, 0.08) !important;
-    }
-
-    /* Dynamic Header Text Colors */
-    .text-card-title {
-        color: var(--bs-body-color, #334155);
-    }
-    
-    html[data-bs-theme="dark"] .text-card-title,
-    [data-bs-theme="dark"] .text-card-title,
-    body.dark-mode .text-card-title,
-    .dark-style .text-card-title {
-        color: #f1f5f9 !important;
-    }
-
-    /* Icon Background Tints */
-    .icon-bg-primary { background-color: rgba(59, 130, 246, 0.15); color: #3b82f6; }
-    .icon-bg-success { background-color: rgba(34, 197, 94, 0.15); color: #22c55e; }
-    .icon-bg-info { background-color: rgba(6, 182, 212, 0.15); color: #06b6d4; }
-    .icon-bg-purple { background-color: rgba(168, 85, 247, 0.15); color: #a855f7; }
-    .icon-bg-warning { background-color: rgba(245, 158, 11, 0.15); color: #f59e0b; }
-    .icon-bg-danger { background-color: rgba(236, 72, 153, 0.15); color: #ec4899; }
+    /* Custom Scrollbar */
+    ::-webkit-scrollbar { width: 6px; }
+    ::-webkit-scrollbar-track { background: transparent; }
+    ::-webkit-scrollbar-thumb { background: rgba(255, 255, 255, 0.15); border-radius: 3px; }
 </style>
 
 <div class="container-xxl flex-grow-1 container-p-y">
 
-    <!-- Executive Overview Banner with Live Clock -->
+    <!-- Executive Hero Banner with Live Clock -->
     <div class="row mb-4">
         <div class="col-12">
             <div class="card border-0 shadow-lg text-white" 
                  style="background: linear-gradient(135deg, #051650 0%, #3357b8 100%); border-radius: 1rem; border: 1px solid rgba(255, 255, 255, 0.08);">
                 <div class="card-body p-4">
                     <div class="row align-items-center gy-3">
+                        <!-- Left Info Block -->
                         <div class="col-lg-7">
                             <div class="d-flex align-items-center gap-2 mb-2">
                                 <h2 class="text-white fw-bold mb-0">Executive Overview</h2>
@@ -243,6 +88,7 @@
                                 Comprehensive management system for campaigns, donor allocations, beneficiaries, and active grants.
                             </p>
                             
+                            <!-- Date, Clock & Refresh Control -->
                             <div class="d-flex flex-wrap align-items-center gap-3">
                                 <div class="px-3 py-2 rounded-3 bg-dark bg-opacity-50 border border-secondary border-opacity-25 d-flex align-items-center gap-2">
                                     <i class="bx bx-calendar text-info fs-5"></i>
@@ -259,17 +105,18 @@
                             </div>
                         </div>
 
+                        <!-- Right Summary Badges -->
                         <div class="col-lg-5">
                             <div class="row g-3 text-center justify-content-lg-end">
                                 <div class="col-6 col-sm-5">
                                     <div class="p-3 rounded-3 bg-dark bg-opacity-25 border border-secondary border-opacity-10">
-                                        <h2 class="text-white fw-bold mb-1">{{ number_format($stats['total_donors'] ?? 1) }}</h2>
+                                        <h2 class="text-white fw-bold mb-1">{{ number_format($stats['total_donors'] ?? 0) }}</h2>
                                         <span class="text-white-50 fs-7 fw-medium text-uppercase tracking-wider">Total Donors</span>
                                     </div>
                                 </div>
                                 <div class="col-6 col-sm-5">
                                     <div class="p-3 rounded-3 bg-dark bg-opacity-25 border border-secondary border-opacity-10">
-                                        <h2 class="text-white fw-bold mb-1">{{ number_format($stats['active_campaigns'] ?? 1) }}</h2>
+                                        <h2 class="text-white fw-bold mb-1">{{ number_format($stats['active_campaigns'] ?? 0) }}</h2>
                                         <span class="text-white-50 fs-7 fw-medium text-uppercase tracking-wider">Active Campaigns</span>
                                     </div>
                                 </div>
@@ -281,28 +128,28 @@
         </div>
     </div>
 
-    <!-- Enhanced Theme-Adaptive KPI Cards -->
-    <div class="row g-3 mb-4">
+    <!-- Metric KPI Cards -->
+    <div class="row g-4 mb-4">
         @php
             $tiles = [
-                ['label' => 'Total Donors', 'value' => number_format($stats['total_donors'] ?? 1), 'icon' => 'bx-user-pin', 'icon_bg' => 'icon-bg-primary', 'sub' => 'Last 30 days', 'variant' => 'card-variant-blue'],
-                ['label' => 'Total Raised', 'value' => '$' . number_format($stats['total_raised'] ?? 1000000, 0), 'icon' => 'bx-donate-heart', 'icon_bg' => 'icon-bg-success', 'sub' => 'All time total', 'variant' => 'card-variant-green'],
-                ['label' => 'Active Campaigns', 'value' => number_format($stats['active_campaigns'] ?? 1), 'icon' => 'bx-megaphone', 'icon_bg' => 'icon-bg-info', 'sub' => 'Currently live', 'variant' => 'card-variant-cyan'],
-                ['label' => 'Approved Beneficiaries', 'value' => number_format($stats['beneficiaries'] ?? 1), 'icon' => 'bx-group', 'icon_bg' => 'icon-bg-purple', 'sub' => 'Verified records', 'variant' => 'card-variant-purple'],
-                ['label' => 'Pending Approval', 'value' => number_format($stats['pending_beneficiaries'] ?? 0), 'icon' => 'bx-time-five', 'icon_bg' => 'icon-bg-warning', 'sub' => 'Requires review', 'variant' => 'card-variant-amber'],
-                ['label' => 'Active Grants', 'value' => number_format($stats['active_grants'] ?? 0), 'icon' => 'bx-award', 'icon_bg' => 'icon-bg-danger', 'sub' => 'Allocated funds', 'variant' => 'card-variant-pink'],
+                ['label' => 'Total Donors', 'value' => number_format($stats['total_donors'] ?? 0), 'icon' => 'bx-user-pin', 'color' => 'primary', 'sub' => 'Last 30 days'],
+                ['label' => 'Total Raised', 'value' => '$' . number_format($stats['total_raised'] ?? 0, 2), 'icon' => 'bx-donate-heart', 'color' => 'success', 'sub' => 'All time total'],
+                ['label' => 'Active Campaigns', 'value' => number_format($stats['active_campaigns'] ?? 0), 'icon' => 'bx-megaphone', 'color' => 'info', 'sub' => 'Currently live'],
+                ['label' => 'Approved Beneficiaries', 'value' => number_format($stats['beneficiaries'] ?? 0), 'icon' => 'bx-group', 'color' => 'primary', 'sub' => 'Verified records'],
+                ['label' => 'Pending Approval', 'value' => number_format($stats['pending_beneficiaries'] ?? 0), 'icon' => 'bx-time-five', 'color' => 'warning', 'sub' => 'Requires review'],
+                ['label' => 'Active Grants', 'value' => number_format($stats['active_grants'] ?? 0), 'icon' => 'bx-award', 'color' => 'secondary', 'sub' => 'Allocated funds'],
             ];
         @endphp
 
         @foreach ($tiles as $tile)
             <div class="col-sm-6 col-md-4 col-xl-2">
-                <div class="stat-card {{ $tile['variant'] }}">
-                    <div class="d-flex align-items-center justify-content-between mb-2">
-                        <div class="stat-icon-wrapper {{ $tile['icon_bg'] }}">
-                            <i class="bx {{ $tile['icon'] }} fs-5"></i>
-                        </div>
+                <div class="stat-card">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
+                        <span class="avatar-initial rounded-3 bg-label-{{ $tile['color'] }} p-2 d-flex align-items-center justify-content-center">
+                            <i class="bx {{ $tile['icon'] }} fs-4 text-{{ $tile['color'] }}"></i>
+                        </span>
                         <div class="dropdown">
-                            <button class="btn btn-sm btn-icon text-muted p-0" type="button" data-bs-toggle="dropdown">
+                            <button class="btn btn-sm btn-icon text-muted" type="button" data-bs-toggle="dropdown">
                                 <i class="bx bx-dots-vertical-rounded fs-5"></i>
                             </button>
                             <ul class="dropdown-menu dropdown-menu-end">
@@ -311,9 +158,9 @@
                         </div>
                     </div>
                     <div>
-                        <span class="text-secondary stat-label d-block mb-1" title="{{ $tile['label'] }}">{{ $tile['label'] }}</span>
-                        <div class="stat-value text-card-title mb-1" title="{{ $tile['value'] }}">{{ $tile['value'] }}</div>
-                        <small class="text-muted fs-tiny d-block text-truncate">{{ $tile['sub'] }}</small>
+                        <span class="text-secondary fw-medium d-block fs-7 text-truncate mb-1">{{ $tile['label'] }}</span>
+                        <h3 class="mb-1 fw-bold text-primary">{{ $tile['value'] }}</h3>
+                        <small class="text-secondary fs-tiny d-block">{{ $tile['sub'] }}</small>
                     </div>
                 </div>
             </div>
@@ -323,51 +170,51 @@
     <!-- Quick Actions Section -->
     <div class="mb-4">
         <div class="d-flex align-items-center justify-content-between mb-3">
-            <h5 class="fw-bold mb-0 text-card-title">Quick Actions</h5>
+            <h5 class="fw-bold mb-0">Quick Actions</h5>
             <small class="text-secondary">Frequently used management tools</small>
         </div>
         <div class="row g-3">
             <div class="col-6 col-md-3">
-                <a href="#" class="quick-action-card stat-card card-variant-blue">
-                    <div class="quick-action-icon text-primary">
+                <a href="#" class="quick-action-card">
+                    <div class="quick-action-icon bg-label-primary text-primary">
                         <i class="bx bx-plus-circle"></i>
                     </div>
-                    <div class="overflow-hidden">
-                        <h6 class="mb-0 fw-bold fs-7 text-card-title text-truncate">New Campaign</h6>
-                        <small class="text-secondary fs-tiny d-block text-truncate">Create & launch</small>
+                    <div>
+                        <h6 class="mb-0 fw-bold fs-7">New Campaign</h6>
+                        <small class="text-secondary fs-tiny">Create & launch</small>
                     </div>
                 </a>
             </div>
             <div class="col-6 col-md-3">
-                <a href="#" class="quick-action-card stat-card card-variant-green">
-                    <div class="quick-action-icon text-success">
+                <a href="#" class="quick-action-card">
+                    <div class="quick-action-icon bg-label-success text-success">
                         <i class="bx bx-user-plus"></i>
                     </div>
-                    <div class="overflow-hidden">
-                        <h6 class="mb-0 fw-bold fs-7 text-card-title text-truncate">Add Donor</h6>
-                        <small class="text-secondary fs-tiny d-block text-truncate">Register new profile</small>
+                    <div>
+                        <h6 class="mb-0 fw-bold fs-7">Add Donor</h6>
+                        <small class="text-secondary fs-tiny">Register new profile</small>
                     </div>
                 </a>
             </div>
             <div class="col-6 col-md-3">
-                <a href="#" class="quick-action-card stat-card card-variant-amber">
-                    <div class="quick-action-icon text-warning">
+                <a href="#" class="quick-action-card">
+                    <div class="quick-action-icon bg-label-warning text-warning">
                         <i class="bx bx-check-shield"></i>
                     </div>
-                    <div class="overflow-hidden">
-                        <h6 class="mb-0 fw-bold fs-7 text-card-title text-truncate">Review Applications</h6>
-                        <small class="text-secondary fs-tiny d-block text-truncate">Pending beneficiaries</small>
+                    <div>
+                        <h6 class="mb-0 fw-bold fs-7">Review Applications</h6>
+                        <small class="text-secondary fs-tiny">Pending beneficiaries</small>
                     </div>
                 </a>
             </div>
             <div class="col-6 col-md-3">
-                <a href="#" class="quick-action-card stat-card card-variant-pink">
-                    <div class="quick-action-icon text-danger">
+                <a href="#" class="quick-action-card">
+                    <div class="quick-action-icon bg-label-info text-info">
                         <i class="bx bx-file"></i>
                     </div>
-                    <div class="overflow-hidden">
-                        <h6 class="mb-0 fw-bold fs-7 text-card-title text-truncate">Generate Report</h6>
-                        <small class="text-secondary fs-tiny d-block text-truncate">Financial export</small>
+                    <div>
+                        <h6 class="mb-0 fw-bold fs-7">Generate Report</h6>
+                        <small class="text-secondary fs-tiny">Financial export</small>
                     </div>
                 </a>
             </div>
@@ -376,11 +223,12 @@
 
     <!-- Main Analytics Charts Section -->
     <div class="row g-4 mb-4">
+        <!-- Area Chart: Donations Trend -->
         <div class="col-lg-8">
             <div class="card h-100 shadow-sm border rounded-3">
                 <div class="card-header d-flex justify-content-between align-items-center bg-transparent border-bottom border-opacity-10 pb-3">
                     <div>
-                        <h5 class="card-title mb-1 fw-bold text-card-title">Donations Trend</h5>
+                        <h5 class="card-title mb-1 fw-bold">Donations Trend</h5>
                         <small class="text-secondary">Overview of contributions over time</small>
                     </div>
                     <div class="dropdown">
@@ -400,10 +248,11 @@
             </div>
         </div>
 
+        <!-- Radial Bar Chart: Beneficiary Distribution -->
         <div class="col-lg-4">
             <div class="card h-100 shadow-sm border rounded-3">
                 <div class="card-header bg-transparent border-bottom border-opacity-10 pb-3">
-                    <h5 class="card-title mb-1 fw-bold text-card-title">Beneficiaries Status</h5>
+                    <h5 class="card-title mb-1 fw-bold">Beneficiaries Status</h5>
                     <small class="text-secondary">Approval distribution breakdown</small>
                 </div>
                 <div class="card-body d-flex flex-column align-items-center justify-content-center">
@@ -425,17 +274,18 @@
 
     <!-- Top Campaigns & Recent Transactions -->
     <div class="row g-4">
+        <!-- Top Performing Campaigns -->
         <div class="col-lg-4">
             <div class="card h-100 shadow-sm border rounded-3">
                 <div class="card-header d-flex justify-content-between align-items-center bg-transparent border-bottom border-opacity-10 pb-3">
-                    <h5 class="card-title mb-0 fw-bold text-card-title">Top Campaigns</h5>
+                    <h5 class="card-title mb-0 fw-bold">Top Campaigns</h5>
                     <a href="#" class="fs-7 fw-semibold text-primary">View All</a>
                 </div>
                 <div class="card-body pt-3">
                     @forelse ($topCampaigns ?? [] as $campaign)
                         <div class="mb-4">
                             <div class="d-flex justify-content-between align-items-center mb-1">
-                                <span class="fw-semibold text-truncate text-card-title" style="max-width: 180px;">{{ $campaign->title }}</span>
+                                <span class="fw-semibold text-truncate" style="max-width: 180px;">{{ $campaign->title }}</span>
                                 <span class="badge bg-primary fs-tiny">{{ number_format($campaign->progress_percent) }}%</span>
                             </div>
                             <div class="d-flex justify-content-between fs-tiny text-secondary mb-2">
@@ -462,11 +312,12 @@
             </div>
         </div>
 
+        <!-- Recent Transactions Table -->
         <div class="col-lg-8">
             <div class="card h-100 shadow-sm border rounded-3">
                 <div class="card-header d-flex justify-content-between align-items-center bg-transparent border-bottom border-opacity-10 pb-3">
                     <div>
-                        <h5 class="card-title mb-0 fw-bold text-card-title">Recent Transactions</h5>
+                        <h5 class="card-title mb-0 fw-bold">Recent Transactions</h5>
                         <small class="text-secondary">Latest contribution records</small>
                     </div>
                     <button class="btn btn-sm btn-outline-secondary rounded-pill px-3">
@@ -496,11 +347,11 @@
                                                 {{ strtoupper(substr($donation->donor->display_name ?? 'A', 0, 2)) }}
                                             </span>
                                         </div>
-                                        <span class="fw-medium text-card-title">{{ $donation->donor->display_name ?? 'Anonymous' }}</span>
+                                        <span class="fw-medium">{{ $donation->donor->display_name ?? 'Anonymous' }}</span>
                                     </div>
                                 </td>
                                 <td><span class="text-truncate d-inline-block" style="max-width: 150px;">{{ $donation->campaign->title ?? 'General Fund' }}</span></td>
-                                <td><span class="fw-bold text-card-title">{{ number_format($donation->amount, 2) }}</span> <small class="text-secondary">{{ $donation->currency }}</small></td>
+                                <td><span class="fw-bold">{{ number_format($donation->amount, 2) }}</span> <small class="text-secondary">{{ $donation->currency }}</small></td>
                                 <td><small class="text-secondary">{{ $donation->donation_date->format('d M Y') }}</small></td>
                                 <td>
                                     @php
@@ -533,10 +384,11 @@
 @endsection
 
 @push('scripts')
+<!-- ApexCharts & Dashboard Clock Scripts -->
 <script src="{{ asset('assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // Clock Script
+    // --- Live Clock ---
     function updateLiveClock() {
         const clockElement = document.getElementById('dashboard-clock');
         if (!clockElement) return;
@@ -553,7 +405,7 @@ document.addEventListener('DOMContentLoaded', function () {
     updateLiveClock();
     setInterval(updateLiveClock, 1000);
 
-    // Area Chart Data
+    // --- Safely Parsed Area Chart Data ---
     const labels = {!! json_encode(isset($monthlyDonations) ? $monthlyDonations->pluck('ym') : ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun']) !!};
     const values = {!! json_encode(isset($monthlyDonations) ? $monthlyDonations->pluck('total') : [1200, 1900, 3000, 5000, 4200, 6800]) !!};
 
@@ -569,7 +421,7 @@ document.addEventListener('DOMContentLoaded', function () {
     };
     new ApexCharts(document.querySelector('#donationsTrendChart'), trendChartOptions).render();
 
-    // Radial Bar Chart
+    // --- Radial Bar Chart: Beneficiaries Status ---
     const approved = {{ (int) ($stats['beneficiaries'] ?? 75) }};
     const pending = {{ (int) ($stats['pending_beneficiaries'] ?? 25) }};
     const total = approved + pending;
@@ -580,7 +432,7 @@ document.addEventListener('DOMContentLoaded', function () {
         chart: { type: 'radialBar', height: 290, background: 'transparent' },
         series: [approvedPct, pendingPct],
         labels: ['Approved', 'Pending'],
-        colors: ['#22c55e', '#f59e0b'],
+        colors: ['#10b981', '#f59e0b'],
         plotOptions: {
             radialBar: {
                 hollow: { size: '52%' },
@@ -595,21 +447,4 @@ document.addEventListener('DOMContentLoaded', function () {
     new ApexCharts(document.querySelector('#beneficiariesRadialChart'), radialChartOptions).render();
 });
 </script>
-
-
-<!-- Core JS -->
-<script src="{{ asset('assets/vendor/libs/jquery/jquery.js') }}"></script>
-<script src="{{ asset('assets/vendor/libs/popper/popper.js') }}"></script>
-<script src="{{ asset('assets/vendor/js/bootstrap.js') }}"></script>
-<script src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
-<script src="{{ asset('assets/vendor/js/menu.js') }}"></script>
-
-<!-- Vendor JS (Apexcharts) -->
-<script src="{{ asset('assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
-
-<!-- Main JS -->
-<script src="{{ asset('assets/js/main.js') }}"></script>
-
-
-
 @endpush

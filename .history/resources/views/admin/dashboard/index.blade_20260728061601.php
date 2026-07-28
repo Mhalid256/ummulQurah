@@ -9,15 +9,14 @@
     ------------------------------------------------------------- */
     .stat-card {
         border-radius: 14px;
-        padding: 1rem 1.15rem;
+        padding: 1.25rem;
         position: relative;
         overflow: hidden;
-        min-height: 140px;
         height: 100%;
         transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         border: 1px solid transparent;
         display: flex;
-        flex-direction: column;
+        flex-column: column;
         justify-content: space-between;
     }
 
@@ -28,38 +27,17 @@
 
     /* Icon Container Enhancements */
     .stat-icon-wrapper {
-        width: 38px;
-        height: 38px;
-        border-radius: 10px;
+        width: 44px;
+        height: 44px;
+        border-radius: 12px;
         display: flex;
         align-items: center;
         justify-content: center;
-        flex-shrink: 0;
         transition: transform 0.3s ease;
     }
     
     .stat-card:hover .stat-icon-wrapper {
-        transform: scale(1.08);
-    }
-
-    /* Metric Number Sizing & Clipping Fix */
-    .stat-value {
-        font-size: 1.35rem;
-        font-weight: 700;
-        line-height: 1.2;
-        letter-spacing: -0.02em;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
-    }
-
-    /* Label Sizing & Truncation */
-    .stat-label {
-        font-size: 0.8rem;
-        font-weight: 600;
-        white-space: nowrap;
-        overflow: hidden;
-        text-overflow: ellipsis;
+        transform: scale(1.1);
     }
 
     /* -------------------------------------------------------------
@@ -109,7 +87,7 @@
 
 
     /* -------------------------------------------------------------
-       DARK MODE AUTO-ADAPTATION
+       DARK MODE AUTO-OVERALYS (Catches HTML & Body Theme Attributes)
     ------------------------------------------------------------- */
     html[data-bs-theme="dark"] .stat-card,
     html[data-theme="dark"] .stat-card,
@@ -121,48 +99,78 @@
         border-color: rgba(255, 255, 255, 0.08) !important;
     }
 
-    /* Dark Mode Accent Top Borders & Glowing Hover Shadows */
+    /* Dark Mode Accent Top Borders & Glowing Shadows */
     html[data-bs-theme="dark"] .card-variant-blue,
+    html[data-theme="dark"] .card-variant-blue,
     [data-bs-theme="dark"] .card-variant-blue,
     body.dark-mode .card-variant-blue,
-    .dark-style .card-variant-blue { border-top: 3px solid #3b82f6 !important; }
+    .dark-style .card-variant-blue {
+        border-top: 3px solid #3b82f6 !important;
+    }
     html[data-bs-theme="dark"] .card-variant-blue:hover,
-    [data-bs-theme="dark"] .card-variant-blue:hover { box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4); }
+    [data-bs-theme="dark"] .card-variant-blue:hover {
+        box-shadow: 0 10px 25px -5px rgba(59, 130, 246, 0.4);
+    }
 
     html[data-bs-theme="dark"] .card-variant-green,
+    html[data-theme="dark"] .card-variant-green,
     [data-bs-theme="dark"] .card-variant-green,
     body.dark-mode .card-variant-green,
-    .dark-style .card-variant-green { border-top: 3px solid #22c55e !important; }
+    .dark-style .card-variant-green {
+        border-top: 3px solid #22c55e !important;
+    }
     html[data-bs-theme="dark"] .card-variant-green:hover,
-    [data-bs-theme="dark"] .card-variant-green:hover { box-shadow: 0 10px 25px -5px rgba(34, 197, 94, 0.4); }
+    [data-bs-theme="dark"] .card-variant-green:hover {
+        box-shadow: 0 10px 25px -5px rgba(34, 197, 94, 0.4);
+    }
 
     html[data-bs-theme="dark"] .card-variant-cyan,
+    html[data-theme="dark"] .card-variant-cyan,
     [data-bs-theme="dark"] .card-variant-cyan,
     body.dark-mode .card-variant-cyan,
-    .dark-style .card-variant-cyan { border-top: 3px solid #06b6d4 !important; }
+    .dark-style .card-variant-cyan {
+        border-top: 3px solid #06b6d4 !important;
+    }
     html[data-bs-theme="dark"] .card-variant-cyan:hover,
-    [data-bs-theme="dark"] .card-variant-cyan:hover { box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.4); }
+    [data-bs-theme="dark"] .card-variant-cyan:hover {
+        box-shadow: 0 10px 25px -5px rgba(6, 182, 212, 0.4);
+    }
 
     html[data-bs-theme="dark"] .card-variant-purple,
+    html[data-theme="dark"] .card-variant-purple,
     [data-bs-theme="dark"] .card-variant-purple,
     body.dark-mode .card-variant-purple,
-    .dark-style .card-variant-purple { border-top: 3px solid #a855f7 !important; }
+    .dark-style .card-variant-purple {
+        border-top: 3px solid #a855f7 !important;
+    }
     html[data-bs-theme="dark"] .card-variant-purple:hover,
-    [data-bs-theme="dark"] .card-variant-purple:hover { box-shadow: 0 10px 25px -5px rgba(168, 85, 247, 0.4); }
+    [data-bs-theme="dark"] .card-variant-purple:hover {
+        box-shadow: 0 10px 25px -5px rgba(168, 85, 247, 0.4);
+    }
 
     html[data-bs-theme="dark"] .card-variant-amber,
+    html[data-theme="dark"] .card-variant-amber,
     [data-bs-theme="dark"] .card-variant-amber,
     body.dark-mode .card-variant-amber,
-    .dark-style .card-variant-amber { border-top: 3px solid #f59e0b !important; }
+    .dark-style .card-variant-amber {
+        border-top: 3px solid #f59e0b !important;
+    }
     html[data-bs-theme="dark"] .card-variant-amber:hover,
-    [data-bs-theme="dark"] .card-variant-amber:hover { box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.4); }
+    [data-bs-theme="dark"] .card-variant-amber:hover {
+        box-shadow: 0 10px 25px -5px rgba(245, 158, 11, 0.4);
+    }
 
     html[data-bs-theme="dark"] .card-variant-pink,
+    html[data-theme="dark"] .card-variant-pink,
     [data-bs-theme="dark"] .card-variant-pink,
     body.dark-mode .card-variant-pink,
-    .dark-style .card-variant-pink { border-top: 3px solid #ec4899 !important; }
+    .dark-style .card-variant-pink {
+        border-top: 3px solid #ec4899 !important;
+    }
     html[data-bs-theme="dark"] .card-variant-pink:hover,
-    [data-bs-theme="dark"] .card-variant-pink:hover { box-shadow: 0 10px 25px -5px rgba(236, 72, 153, 0.4); }
+    [data-bs-theme="dark"] .card-variant-pink:hover {
+        box-shadow: 0 10px 25px -5px rgba(236, 72, 153, 0.4);
+    }
 
     /* -------------------------------------------------------------
        QUICK ACTION CARDS
@@ -172,7 +180,7 @@
         padding: 1rem;
         display: flex;
         align-items: center;
-        gap: 0.85rem;
+        gap: 1rem;
         text-decoration: none !important;
         color: inherit;
         transition: all 0.25s ease;
@@ -183,13 +191,13 @@
     }
 
     .quick-action-icon {
-        width: 42px;
-        height: 42px;
+        width: 44px;
+        height: 44px;
         border-radius: 10px;
         display: flex;
         align-items: center;
         justify-content: center;
-        font-size: 1.3rem;
+        font-size: 1.35rem;
         flex-shrink: 0;
         background: #ffffff;
         box-shadow: 0 2px 6px rgba(0,0,0,0.06);
@@ -225,7 +233,7 @@
 
 <div class="container-xxl flex-grow-1 container-p-y">
 
-    <!-- Executive Overview Banner with Live Clock -->
+    <!-- Hero Executive Banner with Live Clock -->
     <div class="row mb-4">
         <div class="col-12">
             <div class="card border-0 shadow-lg text-white" 
@@ -282,7 +290,7 @@
     </div>
 
     <!-- Enhanced Theme-Adaptive KPI Cards -->
-    <div class="row g-3 mb-4">
+    <div class="row g-4 mb-4">
         @php
             $tiles = [
                 ['label' => 'Total Donors', 'value' => number_format($stats['total_donors'] ?? 1), 'icon' => 'bx-user-pin', 'icon_bg' => 'icon-bg-primary', 'sub' => 'Last 30 days', 'variant' => 'card-variant-blue'],
@@ -297,9 +305,9 @@
         @foreach ($tiles as $tile)
             <div class="col-sm-6 col-md-4 col-xl-2">
                 <div class="stat-card {{ $tile['variant'] }}">
-                    <div class="d-flex align-items-center justify-content-between mb-2">
+                    <div class="d-flex align-items-center justify-content-between mb-3">
                         <div class="stat-icon-wrapper {{ $tile['icon_bg'] }}">
-                            <i class="bx {{ $tile['icon'] }} fs-5"></i>
+                            <i class="bx {{ $tile['icon'] }} fs-4"></i>
                         </div>
                         <div class="dropdown">
                             <button class="btn btn-sm btn-icon text-muted p-0" type="button" data-bs-toggle="dropdown">
@@ -311,9 +319,9 @@
                         </div>
                     </div>
                     <div>
-                        <span class="text-secondary stat-label d-block mb-1" title="{{ $tile['label'] }}">{{ $tile['label'] }}</span>
-                        <div class="stat-value text-card-title mb-1" title="{{ $tile['value'] }}">{{ $tile['value'] }}</div>
-                        <small class="text-muted fs-tiny d-block text-truncate">{{ $tile['sub'] }}</small>
+                        <span class="text-secondary fw-semibold d-block fs-7 text-truncate mb-1">{{ $tile['label'] }}</span>
+                        <h3 class="mb-1 fw-bold text-card-title">{{ $tile['value'] }}</h3>
+                        <small class="text-muted fs-tiny d-block">{{ $tile['sub'] }}</small>
                     </div>
                 </div>
             </div>
@@ -332,9 +340,9 @@
                     <div class="quick-action-icon text-primary">
                         <i class="bx bx-plus-circle"></i>
                     </div>
-                    <div class="overflow-hidden">
-                        <h6 class="mb-0 fw-bold fs-7 text-card-title text-truncate">New Campaign</h6>
-                        <small class="text-secondary fs-tiny d-block text-truncate">Create & launch</small>
+                    <div>
+                        <h6 class="mb-0 fw-bold fs-7 text-card-title">New Campaign</h6>
+                        <small class="text-secondary fs-tiny">Create & launch</small>
                     </div>
                 </a>
             </div>
@@ -343,9 +351,9 @@
                     <div class="quick-action-icon text-success">
                         <i class="bx bx-user-plus"></i>
                     </div>
-                    <div class="overflow-hidden">
-                        <h6 class="mb-0 fw-bold fs-7 text-card-title text-truncate">Add Donor</h6>
-                        <small class="text-secondary fs-tiny d-block text-truncate">Register new profile</small>
+                    <div>
+                        <h6 class="mb-0 fw-bold fs-7 text-card-title">Add Donor</h6>
+                        <small class="text-secondary fs-tiny">Register new profile</small>
                     </div>
                 </a>
             </div>
@@ -354,9 +362,9 @@
                     <div class="quick-action-icon text-warning">
                         <i class="bx bx-check-shield"></i>
                     </div>
-                    <div class="overflow-hidden">
-                        <h6 class="mb-0 fw-bold fs-7 text-card-title text-truncate">Review Applications</h6>
-                        <small class="text-secondary fs-tiny d-block text-truncate">Pending beneficiaries</small>
+                    <div>
+                        <h6 class="mb-0 fw-bold fs-7 text-card-title">Review Applications</h6>
+                        <small class="text-secondary fs-tiny">Pending beneficiaries</small>
                     </div>
                 </a>
             </div>
@@ -365,9 +373,9 @@
                     <div class="quick-action-icon text-danger">
                         <i class="bx bx-file"></i>
                     </div>
-                    <div class="overflow-hidden">
-                        <h6 class="mb-0 fw-bold fs-7 text-card-title text-truncate">Generate Report</h6>
-                        <small class="text-secondary fs-tiny d-block text-truncate">Financial export</small>
+                    <div>
+                        <h6 class="mb-0 fw-bold fs-7 text-card-title">Generate Report</h6>
+                        <small class="text-secondary fs-tiny">Financial export</small>
                     </div>
                 </a>
             </div>
@@ -536,7 +544,7 @@
 <script src="{{ asset('assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
 <script>
 document.addEventListener('DOMContentLoaded', function () {
-    // Clock Script
+    // Clock
     function updateLiveClock() {
         const clockElement = document.getElementById('dashboard-clock');
         if (!clockElement) return;
@@ -595,21 +603,4 @@ document.addEventListener('DOMContentLoaded', function () {
     new ApexCharts(document.querySelector('#beneficiariesRadialChart'), radialChartOptions).render();
 });
 </script>
-
-
-<!-- Core JS -->
-<script src="{{ asset('assets/vendor/libs/jquery/jquery.js') }}"></script>
-<script src="{{ asset('assets/vendor/libs/popper/popper.js') }}"></script>
-<script src="{{ asset('assets/vendor/js/bootstrap.js') }}"></script>
-<script src="{{ asset('assets/vendor/libs/perfect-scrollbar/perfect-scrollbar.js') }}"></script>
-<script src="{{ asset('assets/vendor/js/menu.js') }}"></script>
-
-<!-- Vendor JS (Apexcharts) -->
-<script src="{{ asset('assets/vendor/libs/apex-charts/apexcharts.js') }}"></script>
-
-<!-- Main JS -->
-<script src="{{ asset('assets/js/main.js') }}"></script>
-
-
-
 @endpush
